@@ -92,13 +92,14 @@ install_linkerd () {
 	local platform=$(get_platform)
 	local arch=$(get_arch)
 	local tempdir=$(my_mktemp $platform)
-	local src_file="linkerd2-cli-stable-${version}-${platform}"
-	local download_url=$(get_download_url $version $src_file)
-	local bin_install_path="${install_path}/bin"
 
+	local src_file="linkerd2-cli-stable-${version}-${platform}"
   if [ "linux" = "${platform}" ] ; then
 	  src_file="${src_file}-${arch}"
 	fi
+
+	local download_url=$(get_download_url $version $src_file)
+	local bin_install_path="${install_path}/bin"
 
 	curl -sSL "${download_url}" -o "${tempdir}/linkerd"
 	if ! validate_checksum "${tempdir}/linkerd" $download_url ; then
